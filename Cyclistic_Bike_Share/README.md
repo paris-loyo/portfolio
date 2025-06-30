@@ -30,9 +30,9 @@ The data is sourced from Cyclistic’s public bike-share system and covers 12 mo
 ### `01_load_and_combine_data.R`
 Performs:
 
-- Data loading and combining from multiple CSVs
-- Column name standardization
-- Missing value and duplicate handling
+- Data loading and combining from multiple CSV files
+- Standardizes column names and formats
+- Handles missing values and duplicates
 - Feature engineering (e.g., ride duration, weekday)
 - Basic data quality filtering
 - Saves cleaned data to `data/cleaned/` as `.csv` and `.RDS`
@@ -40,13 +40,10 @@ Performs:
 ### `02_bike_share_analysis.R`
 Performs:
 
-- Loading the cleaned dataset
+- Loads the cleaned dataset
 - Descriptive statistics on ride behavior
-- Visualizations:
-  - Rides by day of week
-  - Avg ride duration by user type
-  - Rides by hour of day
-  - Monthly usage trends
+- Generates visualizations (e.g., average ride duration by user type, rides per day of the week, etc.)
+- Saves visualizations as .png in the charts/ directory
 
 ---
 
@@ -64,16 +61,16 @@ Performs:
 ## 📈 Key Insights
 
 1. **Casual vs. Member Ride Duration**  
-   Casual riders tend to have significantly longer average ride durations.
+   Casual riders tend to have significantly longer average ride durations. This could inform pricing strategies or marketing campaigns focused on casual riders.
 
 2. **Usage by Day of the Week**  
-   Casual riders prefer weekends; members show weekday commuting patterns.
+   Casual riders prefer weekends, while members show more predictable weekday commuting patterns.
 
 3. **Peak Ride Times**  
-   Most rides occur during late afternoons and early evenings.
+   The majority of rides occur during late afternoons and early evenings, which could suggest peak hours for maintenance or marketing.
 
 4. **Monthly Trends**  
-   Summer months see the highest usage, especially among casual riders.
+   Summer months see the highest usage, especially among casual riders. This could indicate opportunities for seasonal promotions or resource allocation.
 
 ---
 
@@ -97,7 +94,7 @@ install.packages(c("tidyverse", "lubridate", "janitor", "skimr", "scales", "here
 2. **Run `02_bike_share_analysis.R`** to:
    - Load the cleaned dataset
    - Perform descriptive statistical analysis
-   - Generate visualizations and save them in the `charts/` directory
+   - Generate visualizations and save them as .png files in the charts/ directory
 
 ---
 
