@@ -126,6 +126,6 @@ The findings can help Cyclistic (or similar bike-share companies) improve market
 
 ## 👤 Author
 
-Feel free to connect with me on [LinkedIn](linkedin.com/in/parisloyo) or reach out if you have any questions or feedback about this project!
+Feel free to connect with me on [LinkedIn](https://linkedin.com/in/parisloyo) or reach out if you have any questions or feedback about this project!
 
 ---
