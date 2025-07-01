@@ -1,0 +1,190 @@
+---
+title: "Cyclistic Bike Share Analysis"
+author: "Paris Loyo"
+date: "June 2025"
+output: html_document
+---
+
+# 🚲 Introduction
+
+This report analyzes the **Cyclistic bike-share data for 2024**, focusing on usage patterns by day of the week, time of day, and month, with comparisons between **casual** and **member** riders. The analysis was performed in **R**, with visualizations created using `ggplot2`.
+
+------------------------------------------------------------------------
+
+# 📚 Data Loading and Setup
+
+```{r setup, echo=TRUE}
+# Load libraries
+library(tidyverse)  # Includes dplyr, ggplot2, and other packages for data analysis
+library(lubridate)  # For handling date and time objects (e.g., extracting hours)
+library(skimr)      # For quick summary statistics of the dataset
+library(scales)     # For formatting numbers (e.g., adding commas to large numbers)
+
+# Load cleaned bike share data (12 months combined)
+bike_data <- read_csv("../data/cleaned/2024_bike_data_combined.csv")
+```
+
+------------------------------------------------------------------------
+
+# 📝 Descriptive Analysis
+
+## 1. Summary Statistics by User Type
+
+```{r}
+# Summary statistics for ride duration by user type
+summary_stats <- bike_data %>%
+  group_by(member_casual) %>%
+  summarise(
+    avg_duration = mean(ride_length),
+    median_duration = median(ride_length),
+    max_duration = max(ride_length),
+    min_duration = min(ride_length),
+    sd_duration = sd(ride_length),
+    ride_count = n()
+  )
+
+# Display summary statistics
+summary_stats
+```
+
+*Insights: - Casual riders tend to have longer average ride durations compared to members. - We can also see the variation (standard deviation) and ride counts for each group.*
+
+## 2. Rides by Day of the Week
+
+```{r}
+# Ensure 'day_of_week' is a factor with ordered levels from Sunday to Saturday
+bike_data$day_of_week <- factor(bike_data$day_of_week, levels = c("Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"))
+
+# Rides by day of the week and user type
+rides_by_day <- bike_data %>%
+  group_by(member_casual, day_of_week) %>%
+  summarise(rides = n(), avg_duration = mean(ride_length)) %>%
+  arrange(member_casual)
+
+# Display results
+rides_by_day
+```
+
+*Insights: - Casual riders show a preference for weekends, whereas members use the bikes more frequently on weekdays, particularly for commuting.*
+
+*Visualization:*
+
+```{r}
+ggplot(rides_by_day, aes(x = day_of_week, y = rides, fill = member_casual)) +
+  geom_col(width = 0.7, position = "dodge") + 
+  scale_y_continuous(labels = label_comma()) + 
+  labs(title = "Rides by Day of Week", x = "Day of Week", y = "Ride Count") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+Save the plot as PNG:
+
+```{r}
+ggsave("../charts/4.1_Rides_by_Day_of_Week.png", plot = last_plot(), width = 10, height = 6)
+```
+
+## 3. Rides by Hour of Day
+
+```{r}
+# Extract 'hour_of_day' from 'started_at' timestamp
+bike_data <- bike_data %>%
+  mutate(hour_of_day = hour(started_at))
+
+# Group by user type and hour of day
+rides_by_time <- bike_data %>%
+  group_by(member_casual, hour_of_day) %>%
+  summarise(rides = n())
+
+# Display results
+rides_by_time
+```
+
+*Insights: - Ride counts peak during the afternoon/evening for both members and casual riders, with a notable difference in timing patterns between the two groups.*
+
+*Visualization:*
+
+```{r}
+ggplot(rides_by_time, aes(x = hour_of_day, y = rides, fill = member_casual)) +
+  geom_col(position = "dodge") + 
+  scale_y_continuous(labels = label_comma()) + 
+  labs(title = "Rides by Hour of Day", x = "Hour of Day", y = "Ride Count") +
+  theme_minimal()
+```
+
+Save the plot as PNG:
+
+```{r}
+ggsave("../charts/4.3_Rides_by_Hour_of_Day.png", plot = last_plot(), width = 10, height = 6)
+```
+
+## 4. Rides by Month
+
+```{r}
+# Group by month and user type
+rides_by_month <- bike_data %>%
+  group_by(member_casual, month) %>%
+  summarise(rides = n())
+
+# Order months from Jan to Dec
+rides_by_month <- rides_by_month %>%
+  mutate(month = factor(month, levels = month.abb))
+
+# Display results
+rides_by_month
+
+```
+
+*Insights: - Summer months (June–August) have the highest number of rides, especially among casual riders, which may indicate increased demand for bike-sharing during warm months.*
+
+*Visualization:*
+
+```{r}
+ggplot(rides_by_month, aes(x = month, y = rides, fill = member_casual)) +
+  geom_col(width = 0.7, position = "dodge") + 
+  scale_y_continuous(labels = label_comma()) + 
+  labs(title = "Rides by Month", x = "Month", y = "Ride Count") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+Save the plot as PNG:
+
+```{r}
+ggsave("../charts/4.4_Rides_by_Month.png", plot = last_plot(), width = 10, height = 6)
+```
+
+------------------------------------------------------------------------
+
+# 🧠 Conclusion
+
+This exploratory data analysis on the Cyclistic bike-share data for 2024 provides valuable insights into user behavior:
+
+-   Casual riders generally take longer rides and prefer weekends, while members use bikes more frequently during the week, likely for commuting.
+
+-   Peak ride times occur in the late afternoon/evening for both groups.
+
+-   Summer months see a significant increase in usage, especially among casual riders.
+
+These findings can be useful for marketing strategies, resource allocation, and optimizing the customer experience for both types of riders.
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+## 📁 Data and Code
+
+You can access the raw data and cleaned data through the following links:
+
+-   [Download Raw Data](https://drive.google.com/drive/folders/19ub7eU1bojJBG4bacEHn1UdlZxR4tpZg?usp=drive_link)
+-   [Download Cleaned Data](https://drive.google.com/drive/folders/1qeE-V3HxAP0L6tmzZL2Jieo94Ak5qHwY?usp=drive_link)
+
+**Notes:**
+
+This report is designed to be reproducible. If you'd like to recreate the analysis, please ensure that the required packages (`tidyverse`, `lubridate`, `skimr`, `scales`) are installed and that the data files are correctly loaded.
+
+------------------------------------------------------------------------
+
+## 💻 Author
+
+Feel free to reach out if you have any questions or need further clarification. Connect with me on [LinkedIn](https://linkedin.com/in/parisloyo).
