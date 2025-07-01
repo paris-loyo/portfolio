@@ -47,6 +47,15 @@ Performs:
 
 ---
 
+## 📊 Data Files
+
+The raw and cleaned datasets are too large to include in the GitHub repository but can be accessed via the following Google Drive links:
+
+- [Download Raw Data](https://drive.google.com/drive/folders/19ub7eU1bojJBG4bacEHn1UdlZxR4tpZg?usp=drive_link)
+- [Download Cleaned Data](https://drive.google.com/drive/folders/1qeE-V3HxAP0L6tmzZL2Jieo94Ak5qHwY?usp=drive_link)
+
+---
+
 ## 📊 Tools & Libraries
 
 - `tidyverse` – data wrangling and visualization
