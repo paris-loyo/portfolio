@@ -85,10 +85,13 @@ print(rides_by_month)
 ggplot(rides_by_day, aes(x = day_of_week, y = rides, fill = member_casual)) +
   geom_col(width = 0.7, position = "dodge") +  # Create separate bars for each day of the week and user type (dodged side by side)
   scale_y_continuous(labels = label_comma()) +  # Format y-axis with commas for easier readability
-  labs(title = "Number of Rides by Day of Week",  # Title and axis labels
+  labs(title = "Rides by Day of Week",  # Title and axis labels
        x = "Day of Week", y = "Ride Count") +
   theme_minimal() +  # Use minimal theme (clean, simple design)
   theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels for better readability
+
+# Save the plot as PNG
+ggsave("charts/4.1_Rides_by_Day_of_Week.png", plot = last_plot(), width = 10, height = 6)
 
 # 4.2. Average Ride Duration by User Type (chart)
 # Bar chart: Average ride duration by user type
@@ -98,21 +101,30 @@ ggplot(summary_stats, aes(x = member_casual, y = avg_duration, fill = member_cas
        x = "User Type", y = "Avg Duration (minutes)") +
   theme_minimal()  # Use minimal theme
 
+# Save the plot as PNG
+ggsave("charts/4.2._Average_Ride_Duration_by_User_Type.png", plot = last_plot(), width = 10, height = 6)
+
 # 4.3. Rides by Hour of Day (chart)
 # Bar chart: Rides by hour of day by user type
 ggplot(rides_by_time, aes(x = hour_of_day, y = rides, fill = member_casual)) +
   geom_col(position = "dodge") +  # Create separate bars for each hour and user type
   scale_y_continuous(labels = label_comma()) +  # Format y-axis with commas for readability
-  labs(title = "Ride Counts by Time of Day",  # Title and axis labels
+  labs(title = "Rides by Hour of Day",  # Title and axis labels
        x = "Hour of Day", y = "Ride Count") +
   theme_minimal()  # Use minimal theme
+
+# Save the plot as PNG
+ggsave("charts/4.3_Rides_by_Hour_of_Day.png", plot = last_plot(), width = 10, height = 6)
 
 # 4.4. Ride counts by month (chart)
 # Bar chart: Ride counts by month (Jan - Dec) for each user type
 ggplot(rides_by_month, aes(x = month, y = rides, fill = member_casual)) +
   geom_col(width = 0.7, position = "dodge") +  # Create separate bars for each month and user type
   scale_y_continuous(labels = label_comma()) +  # Format y-axis with commas for readability
-  labs(title = "Ride Counts by Month",  # Title and axis labels
+  labs(title = "Rides by Month",  # Title and axis labels
        x = "Month", y = "Ride Count") +
   theme_minimal() +  # Use minimal theme
   theme(axis.text.x = element_text(angle = 45, hjust = 1))  # Rotate x-axis labels for better readability
+
+# Save the plot as PNG
+ggsave("charts/4.4_Rides_by_Month.png", plot = last_plot(), width = 10, height = 6)
