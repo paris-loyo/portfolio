@@ -1,5 +1,5 @@
 # ====================================
-# Bike Share Case Study - Analysis Script
+# Cyclistic Bike-Share Case Study - Analysis Script
 # Author: Paris Loyo
 # Date: June 2025
 # Description: EDA and insights for Cyclistic 2024 data
