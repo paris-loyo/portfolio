@@ -1,5 +1,5 @@
 ---
-title: "Cyclistic Bike Share Analysis"
+title: "Cyclistic Bike-Share Analysis"
 author: "Paris Loyo"
 date: "June 2025"
 output: html_document
