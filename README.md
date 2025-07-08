@@ -1,2 +1,2 @@
-# portfolio
-Data Analyst Portfolio showcasing projects and case studies
+# Portfolio
+Data Analyst portfolio showcasing projects and case studies
